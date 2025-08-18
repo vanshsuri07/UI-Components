@@ -1,69 +1,135 @@
-# React + TypeScript + Vite
+# 🌌 Frontend Assignment – InputField & DataTable Components
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern frontend assignment built with **React + TypeScript + TailwindCSS + Shadcn UI**.  
+It demonstrates reusable form components, an interactive data table, dark/light themes, and animations.  
+Deployed on **Vercel** for live preview.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features
 
-## Expanding the ESLint configuration
+### 📝 InputField Component
+- Variants: **Outlined, Filled, Ghost**
+- Sizes: **Small, Medium, Large**
+- States: **Error, Disabled, Helper Text**
+- Responsive + accessible (`aria-label`, labels)
+- Built as a **reusable component** with TypeScript props
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 📊 DataTable Component
+- Display tabular data
+- Column **sorting**
+- Row selection (**single/multiple**)
+- **Add/Delete** rows dynamically
+- **Search filter** 🔍
+- **Pagination**
+- **Loading** + **Empty states**
+- Dark/Light **mode toggle**
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 🎨 UI/UX
+- Clean **dark theme** (with toggle)
+- Smooth transitions & animations
+- Background stars animation (`StarsCanvas ✨`)
+- Fully **responsive** (mobile → desktop)
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 🖼️ Screenshots / Demo
+
+| Form Demo | DataTable Demo |
+|-----------|----------------|
+| ![Form Demo](./src/assets/Inputform.png) | ![Table Demo](./src/assets/datatable.png) |
+
+
+
+---
+
+## 🛠️ Tech Stack
+
+- ⚛️ **React + TypeScript**
+- 🎨 **TailwindCSS + Shadcn UI**
+- 🌗 **Dark/Light Theme** (ThemeProvider + toggle)
+- 📖 **Storybook** for component documentation
+- ✅ **Jest + React Testing Library** for unit tests
+- ▲ **Vercel** for deployment
+
+---
+
+## 🚀 Getting Started
+
+Clone the repo:
+```bash
+git clone https://github.com/vanshsuri07/UI-Components.git
+cd my-components
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+ Install dependencies:
 ```
+npm install
+```
+ Run dev server:
+```
+npm run dev
+```
+
+## 📖 Storybook
+
+Build Storybook:
+```
+npm run build-storybook
+```
+Run locally:
+```
+npm run storybook
+```
+
+## ➡️ Storybook will be live at:
+https://ui-components-9xsi.vercel.app/?path=/story/components-datatable--default
+
+
+## ✅ Tests
+
+Run unit tests with Jest:
+```
+npm test
+```
+## 🌌 Deployment
+
+Deployed on Vercel:
+https://ui-components-blond.vercel.app/
+
+##📂 Project Structure
+```
+src/
+ ├── components/
+ │    ├── InputField/
+ │    │    ├── InputField.tsx
+ │    │    ├── InputField.stories.tsx
+ │    │    └── InputField.test.tsx
+ │    ├── DataTable/
+ │    │    ├── datatable.tsx
+ │    │    ├── DataTable.stories.tsx
+ │    │    └── DataTable.test.tsx
+ │    ├── Animation.tsx
+ │    └── theme-provider.tsx
+ ├── App.tsx
+ ├── App.css
+ └── index.tsx
+```
+
+
+## 📌 Notes
+
+Form inputs are validated with error messages.
+
+DataTable supports dynamic rows (Add/Delete).
+
+Fully responsive for mobile-first design.
+
+
+
+## 👨‍💻 Author
+@vanshsuri07
+
+
+
