@@ -128,8 +128,9 @@ Fully responsive for mobile-first design.
 
 
 
-## 👨‍💻 Author
-@vanshsuri07
+## 👨‍💻 Author  
+[@vanshsuri07](https://github.com/vanshsuri07)
+
 
 
 
