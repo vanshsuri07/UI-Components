@@ -13,6 +13,20 @@ const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(file
 // More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Split vendor chunks for better caching
+          'react-vendor': ['react', 'react-dom'],
+          'three-vendor': ['three', '@react-three/fiber', '@react-three/drei', 'maath'],
+          'ui-vendor': ['lucide-react', '@radix-ui/react-dropdown-menu', '@radix-ui/react-label', '@radix-ui/react-slot'],
+        },
+      },
+    },
+    // Increase chunk size warning limit to 600kb
+    chunkSizeWarningLimit: 600,
+  },
   test: {
     projects: [{
       extends: true,

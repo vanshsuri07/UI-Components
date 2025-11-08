@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react";
+import React, { useState, memo, useCallback } from "react";
 import { Eye, EyeOff } from "lucide-react"; 
 
 interface InputFieldDemoProps {
@@ -36,7 +36,8 @@ const sizeStyles = {
   lg: "text-lg px-4 py-3",
 };
 
-export const InputField: React.FC<InputFieldProps> = ({
+// Memoized InputField component
+export const InputField: React.FC<InputFieldProps> = memo(({
   value,
   onChange,
   label,
@@ -50,6 +51,10 @@ export const InputField: React.FC<InputFieldProps> = ({
   type = "text",
 }) => {
   const [showPassword, setShowPassword] = useState(false);
+
+  const togglePassword = useCallback(() => {
+    setShowPassword(prev => !prev);
+  }, []);
 
   return (
     <div className="flex flex-col gap-1 w-full">
@@ -74,7 +79,7 @@ export const InputField: React.FC<InputFieldProps> = ({
         {type === "password" && (
           <button
             type="button"
-            onClick={() => setShowPassword(!showPassword)}
+            onClick={togglePassword}
             className="absolute inset-y-0 right-2 flex items-center text-gray-400 hover:text-gray-200"
           >
             {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -89,7 +94,9 @@ export const InputField: React.FC<InputFieldProps> = ({
       ) : null}
     </div>
   );
-};
+});
+
+InputField.displayName = "InputField";
 
 
 
