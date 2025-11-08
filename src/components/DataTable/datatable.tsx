@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useMemo, memo, useCallback } from "react"
 
 interface Column<T> {
   key: string
@@ -18,41 +18,46 @@ interface DataTableProps<T> {
   onDelete?: (ids: (number | string)[]) => void
 }
 
-export function DataTable<T extends { id: number | string }>({
+// Memoized DataTable component
+const DataTableComponent = <T extends { id: number | string }>({
   data,
   columns,
   loading = false,
   selectable = false,
   onRowSelect,
   onDelete,
-}: DataTableProps<T>) {
+}: DataTableProps<T>) => {
   const [sortKey, setSortKey] = useState<string | null>(null)
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc")
   const [selectedRows, setSelectedRows] = useState<Set<number | string>>(new Set())
   const [search, setSearch] = useState("")
 
-  
-  const filteredData = data.filter((row) =>
-    Object.values(row).some((val) =>
-      String(val).toLowerCase().includes(search.toLowerCase())
-    )
+  // Memoize filtered data
+  const filteredData = useMemo(() => 
+    data.filter((row) =>
+      Object.values(row).some((val) =>
+        String(val).toLowerCase().includes(search.toLowerCase())
+      )
+    ), [data, search]
   )
 
+  // Memoize sorted data
+  const sortedData = useMemo(() => {
+    return [...filteredData].sort((a, b) => {
+      if (!sortKey) return 0
+      const aValue = a[sortKey as keyof T]
+      const bValue = b[sortKey as keyof T]
+      if (typeof aValue === "number" && typeof bValue === "number") {
+        return sortOrder === "asc" ? aValue - bValue : bValue - aValue
+      }
+      return sortOrder === "asc"
+        ? String(aValue).localeCompare(String(bValue))
+        : String(bValue).localeCompare(String(aValue))
+    })
+  }, [filteredData, sortKey, sortOrder])
 
-  const sortedData = [...filteredData].sort((a, b) => {
-    if (!sortKey) return 0
-    const aValue = a[sortKey as keyof T]
-    const bValue = b[sortKey as keyof T]
-    if (typeof aValue === "number" && typeof bValue === "number") {
-      return sortOrder === "asc" ? aValue - bValue : bValue - aValue
-    }
-    return sortOrder === "asc"
-      ? String(aValue).localeCompare(String(bValue))
-      : String(bValue).localeCompare(String(aValue))
-  })
-
-  
-  const toggleRow = (id: number | string) => {
+  // Memoize callbacks
+  const toggleRow = useCallback((id: number | string) => {
     const newSelected = new Set(selectedRows)
     if (newSelected.has(id)) {
       newSelected.delete(id)
@@ -63,14 +68,14 @@ export function DataTable<T extends { id: number | string }>({
     if (onRowSelect) {
       onRowSelect(data.filter((item) => newSelected.has(item.id)))
     }
-  }
+  }, [selectedRows, data, onRowSelect])
 
-  const handleDelete = () => {
+  const handleDelete = useCallback(() => {
     if (onDelete) {
       onDelete(Array.from(selectedRows))
       setSelectedRows(new Set())
     }
-  }
+  }, [onDelete, selectedRows])
 
   if (loading) {
     return (
@@ -177,6 +182,9 @@ export function DataTable<T extends { id: number | string }>({
     </div>
   )
 }
+
+// Export memoized version
+export const DataTable = memo(DataTableComponent) as typeof DataTableComponent
 
 
 export const DataTableDemo = () => {
